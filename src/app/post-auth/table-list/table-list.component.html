@@ -1,0 +1,54 @@
+<div class="container mt-5">
+	<form [formGroup]="questionForm"  (ngSubmit)="onSubmit()" #myForm="ngForm"  required>
+		<div class="mb-3">
+			<label for="question" class="form-label">Question:</label>
+			<input type="text" class="form-control" id="question" formControlName="question" required>
+			<div *ngIf="questionForm.invalid && questionControl?.touched && questionControl.errors">
+				<span *ngIf="questionControl.errors['required']">Question is required</span>
+			</div>
+			
+		</div>
+
+
+
+
+		<div formArrayName="options">
+			<div *ngFor="let option of options.controls; let i = index" class="mb-3">
+				<div [formGroupName]="i">
+					<label [for]="'option' + i" class="form-label">Option {{ i + 1 }}:</label>
+					<input type="text" class="form-control" [id]="'option' + i" formControlName="text" required>
+					<div *ngIf="questionForm.invalid && questionControl?.touched && questionControl.errors">
+						<span *ngIf="questionControl.errors['required']">Add Option here</span>
+					</div>
+					<br>
+					<!-- this remove button will not be visible when there is only 1 field -->
+					<button *ngIf="options.controls.length > 1"  (click)="removeOption(i)" class="btn btn-primary">Remove</button>
+					<!-- this add button only be visible in the last added control field -->
+					<button *ngIf="i === options.controls.length-1" (click)="addOption()" class="btn btn-primary">ADD</button>
+				</div>
+			</div>
+		</div>
+
+	
+
+		<div class="mb-3">
+			<label for="correctAnswer" class="form-label">Correct Answer:</label>
+			<select class="form-control" id="correctAnswer" formControlName="correctAnswer">
+				<option value="" disabled>Select correct answer</option>
+				<ng-container *ngFor="let option of options.value; let i = index">
+					<option [ngValue]="option.text">{{ option.text }}</option>
+				</ng-container>
+				
+			</select>
+		</div>
+
+		<div class="mb-3">
+			<div class="form-check">
+				<input type="checkbox" class="form-check-input" id="multipleAnswers" formControlName="multipleAnswers">
+				<label class="form-check-label" for="multipleAnswers">Multiple Answers</label>
+			</div>
+		</div>
+
+		<button type="submit" class="btn btn-primary" >Submit</button>
+	</form>
+</div>

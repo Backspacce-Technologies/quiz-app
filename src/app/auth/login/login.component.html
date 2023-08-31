@@ -1,0 +1,31 @@
+<div class="row">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-build" >
+        <div class="form-group" >
+          <label for="email">Email : </label>
+          <input type="text" class="form-control" placeholder="Email" formControlName="email" >
+          <div *ngIf="loginForm.invalid && emailControl?.touched && emailControl.errors">
+            <span *ngIf="emailControl.errors['required']">Username is required</span>
+            <span *ngIf="emailControl.errors['email']">Username must be an email</span>
+        </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Password : </label>
+          <input type="password" class="form-control" placeholder="********" formControlName="password">
+          <div *ngIf="loginForm.invalid && passwordControl?.touched && passwordControl.errors">
+            <span *ngIf="passwordControl.errors['required']">Password is required</span>
+            <span *ngIf="passwordControl.errors['minlength']">Password must have at least 8 characters</span>
+        </div>
+          <div class="text-right forget-pass">
+            <a routerLink="/forget-password">Forget Password ?</a>
+          </div>
+        </div>
+        <div class="text-center">
+          <input type="submit" class="btn btn-my" value="Login" >
+          
+          <span *ngIf="invalidLoginAttempt">Invalid Email and password</span>
+      
+        </div>
+      
+      </form>
+</div>
+

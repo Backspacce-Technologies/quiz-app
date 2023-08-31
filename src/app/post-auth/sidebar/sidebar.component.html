@@ -1,0 +1,17 @@
+
+<div  class="side-menu" id="side_nav" >
+
+    <!-- <div (sideNavStatus)="menuStatus" (ngClass)="{'nav-list-open': menuStatus}"> -->
+        <div>
+        <ul class="nav-list " >
+            <li class="nav-list-item" routerLink='/home/add-form' routerLinkActive="active" [routerLinkActiveOptions]={exact:true}>
+                <a href="#"  >Quiz List</a>
+                
+            </li>
+            <li class="nav-list-item"   routerLinkActive="active" [routerLinkActiveOptions]={exact:true} (click)="navigateToStartQuiz()">
+                <a href="#">Start Quiz</a>
+            </li>
+        </ul>
+
+    </div>
+</div>
