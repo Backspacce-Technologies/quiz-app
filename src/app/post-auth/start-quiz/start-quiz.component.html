@@ -7,18 +7,24 @@
             <ol>
                 <div appChangeBg class="card">
                     <li *ngFor="let option of entry.options; let i = index">
-                        <input type="{{ entry.multipleAnswers ? 'checkbox' : 'radio' }}" name="options" [value]="i">
+                        <input type="{{ entry.multipleAnswers ? 'checkbox' : 'radio' }}" name="options" [value]="i"
+                        
+                        (change)="selectOption(i)">
                         {{ option.text }}
                     </li>
                 </div>
             </ol>
         </div>
+
+        <button>Previous</button>
+        <button>Next</button>
         <!-- <button (click)="previousQuestion()" *ngIf="currentQuestionIndex">Previous</button>
         <button>Next</button> -->
         <!-- <button *ngIf="currentQuestionIndex > 0" (click)="previousQuestion()">Previous</button>
         <button *ngIf="currentQuestionIndex < question.length - 1" (click)="nextQuestion()">Next</button>
         -->
 
-    </ng-container>
-    <button >Submit</button>
+    </ng-container> 
+    <button (click)="submitAnswer()">Submit</button>
+    <p>{{ resultMessage }}</p>
 </div>

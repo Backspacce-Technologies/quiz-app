@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
@@ -10,12 +10,14 @@ import { LocalStorageService } from 'src/app/service/local-storage.service';
 })
 export class StartQuizComponent {
   formData: any[] = [];
-  public question: any = [];
+  question = [];
   currentQuestionIndex: number = 0;
+  correctAnswer: any;
   userAnswers: number[] = [];
   questions: any[] = [];
   options: any[] = []
-  questionForm!: FormGroup;
+  @Input() questionForm!: FormGroup;
+  resultMessage: string = '';
 
   constructor(private ls: LocalStorageService, private router: Router, private route: ActivatedRoute) {
 
@@ -23,10 +25,13 @@ export class StartQuizComponent {
   ngOnInit() {
 
     this.formData = JSON.parse(this.ls.getItem('formDataArray')) || [];
-
+    console.log(this.questionForm)
     console.log(this.formData.map(r => r.options.text));
+    console.log(this.formData.map(a => a.question))
     console.log(this.formData);
+   
     this.getAllQuestions();
+
 
     const a = this.formData.map(r => r.options[0].text)
 
@@ -38,6 +43,12 @@ export class StartQuizComponent {
         this.router.navigate(['/start-quiz', this.currentQuestionIndex]);
       }
     })
+
+
+
+
+   
+    
 
 
   }
@@ -53,8 +64,32 @@ export class StartQuizComponent {
       this.router.navigate(['/start-quiz', this.currentQuestionIndex]);
     }
   }
+
+  selectOption(index: number): void {
+    const questionId = this.formData[this.currentQuestionIndex].id;
+    const selectedOption = {
+      questionId: questionId,
+      optionIndex: index
+    };const storedSelectedOptions = JSON.parse(this.ls.getItem('selectedOptions')) || {};
+
+    // Update the selected options for the current question
+    storedSelectedOptions[questionId] = selectedOption;
+  
+    // Save the updated selected options back to local storage
+    localStorage.setItem('selectedOptions', JSON.stringify(storedSelectedOptions));
+  }
   submitAnswer() {
-    const selectedAnswer = this.questionForm.value.options.map((options: { selected: any; }) => options.selected);
+    debugger
+        const selectedAnswer = this.formData.map(options => options.selected);
+   
+
+
+    const correctAnswers = this.formData.map(r=>r.question);
+    const totalQuestions = this.question.length;
+    const correctCount = selectedAnswer.filter((answer, index) => answer === correctAnswers[index]).length;
+    const resultPercentage = (correctCount / totalQuestions) * 100;
+    const resultMessage = `You answered ${correctCount} out of ${totalQuestions} questions correctly (${resultPercentage}%).`;
+
   }
   getAllQuestions() {
     this.question
