@@ -6,11 +6,12 @@ import { AppComponent } from './app.component';
 import { SidebarComponent } from './post-auth/sidebar/sidebar.component';
 import { StartQuizComponent } from './post-auth/start-quiz/start-quiz.component';
 
+
 @NgModule({
 	declarations: [
 		AppComponent,
-  StartQuizComponent
-	 
+  StartQuizComponent,
+
 	],
 	imports: [
 		BrowserModule,

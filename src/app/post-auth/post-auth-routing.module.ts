@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { AddFormComponent } from './add-form/add-form.component';
 import { TableListComponent } from './table-list/table-list.component';
 import { StartQuizComponent } from './start-quiz/start-quiz.component';
+import { ResultComponent } from './result/result.component';
 
 const routes: Routes = [
 	
@@ -32,6 +33,10 @@ const routes: Routes = [
 			{
 				path: 'start-quiz',
 				component: StartQuizComponent,
+			},
+			{
+				path: 'result/:result',
+				component: ResultComponent,
 			}
 		]
 	},

@@ -10,7 +10,7 @@ import { LocalStorageService } from 'src/app/service/local-storage.service';
 })
 export class StartQuizComponent {
   formData: any[] = [];
-  question = [];
+  question: any[] = [];
   currentQuestionIndex: number = 0;
   correctAnswer: any;
   userAnswers: number[] = [];
@@ -18,6 +18,7 @@ export class StartQuizComponent {
   options: any[] = []
   @Input() questionForm!: FormGroup;
   resultMessage: string = '';
+  selectedOptions: { [key: string]: number[] } = {}; 
 
   constructor(private ls: LocalStorageService, private router: Router, private route: ActivatedRoute) {
 
@@ -25,11 +26,11 @@ export class StartQuizComponent {
   ngOnInit() {
 
     this.formData = JSON.parse(this.ls.getItem('formDataArray')) || [];
-    console.log(this.questionForm)
-    console.log(this.formData.map(r => r.options.text));
+    
+    console.log(this.selectedOptions)
+    console.log(this.formData.map(r => r.options));
     console.log(this.formData.map(a => a.question))
     console.log(this.formData);
-   
     this.getAllQuestions();
 
 
@@ -64,32 +65,63 @@ export class StartQuizComponent {
       this.router.navigate(['/start-quiz', this.currentQuestionIndex]);
     }
   }
-
-  selectOption(index: number): void {
-    const questionId = this.formData[this.currentQuestionIndex].id;
-    const selectedOption = {
-      questionId: questionId,
-      optionIndex: index
-    };const storedSelectedOptions = JSON.parse(this.ls.getItem('selectedOptions')) || {};
-
-    // Update the selected options for the current question
-    storedSelectedOptions[questionId] = selectedOption;
-  
-    // Save the updated selected options back to local storage
-    localStorage.setItem('selectedOptions', JSON.stringify(storedSelectedOptions));
+  isOptionSelected(questionIndex: number, optionIndex: number): boolean {
+    // Check if the option is selected for the given question
+    const selectedOptions = this.selectedOptions[questionIndex];
+    return selectedOptions ? selectedOptions.includes(optionIndex) : false;
   }
-  submitAnswer() {
-    debugger
-        const selectedAnswer = this.formData.map(options => options.selected);
+
+  
+
+  selectOption(questionIndex: number, optionIndex: number): void {
+    
+    const questionId = this.formData[questionIndex].id.toString();
    
+    // if (!this.selectedOptions[questionIndex]) {
+    //   this.selectedOptions[questionIndex] = [];
+    // }
+    if (!this.selectedOptions[questionId]) {
+      this.selectedOptions[questionId] = [optionIndex];
+    }
+  
+    const optionPosition = this.selectedOptions[questionId].indexOf(optionIndex);
 
+    // if (optionPosition === -1) {
+    //   this.sdebuggerelectedOptions[questionId].push(optionIndex);
+    // } else {
+    //   this.selectedOptions[questionId].splice(optionPosition, 1);
+    // }
 
-    const correctAnswers = this.formData.map(r=>r.question);
-    const totalQuestions = this.question.length;
-    const correctCount = selectedAnswer.filter((answer, index) => answer === correctAnswers[index]).length;
+    this.saveSelectedOptions();
+  
+
+    
+    // // Save the updated selected options back to local storage
+    // localStorage.setItem('selectedOptions', JSON.stringify(selectedOption));
+  }
+  
+  submitAnswer() {
+   debugger
+    const storedSelectedOptions = localStorage.getItem('selectedOptions');
+    if (storedSelectedOptions) {
+      this.selectedOptions = JSON.parse(storedSelectedOptions);
+    }
+    
+   
+    const selectedAnswer = Object.values(this.selectedOptions);
+    const correctAnswers = this.formData.map(r=>r.correctAnswer);
+    
+    const totalQuestions: any = this.formData.length
+    const correctCount = selectedAnswer.filter((answer, index) => answer.includes(correctAnswers[index])).length;
+    
     const resultPercentage = (correctCount / totalQuestions) * 100;
     const resultMessage = `You answered ${correctCount} out of ${totalQuestions} questions correctly (${resultPercentage}%).`;
+    console.log(resultMessage)
+    this.router.navigate(['/home/result', resultMessage ]);
+  }
+  private saveSelectedOptions(): void {
 
+    localStorage.setItem('selectedOptions', JSON.stringify(this.selectedOptions));
   }
   getAllQuestions() {
     this.question
