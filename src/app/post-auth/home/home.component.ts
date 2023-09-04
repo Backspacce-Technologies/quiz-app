@@ -15,7 +15,9 @@ export class HomeComponent {
 	@Output() sideNavToggled = new EventEmitter<boolean>();
 	menuStatus: boolean = false;
   	@Input() sideNavStatus: boolean = false;
-    
+    isCollapsed: boolean = false;
+
+ 
   	
     
  
@@ -29,7 +31,9 @@ export class HomeComponent {
     
   }
 
-
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
  
   
   Onclick(){

@@ -18,7 +18,8 @@ export class StartQuizComponent {
   options: any[] = []
   @Input() questionForm!: FormGroup;
   resultMessage: string = '';
-  selectedOptions: { [key: string]: number[] } = {}; 
+  selectedOptions: { [key: string]: number[] } = {};
+ 
 
   constructor(private ls: LocalStorageService, private router: Router, private route: ActivatedRoute) {
 
@@ -26,17 +27,19 @@ export class StartQuizComponent {
   ngOnInit() {
 
     this.formData = JSON.parse(this.ls.getItem('formDataArray')) || [];
-    
+
     console.log(this.selectedOptions)
     console.log(this.formData.map(r => r.options));
     console.log(this.formData.map(a => a.question))
     console.log(this.formData);
-    this.getAllQuestions();
+    
+
 
 
     const a = this.formData.map(r => r.options[0].text)
 
     this.route.paramMap.subscribe(params => {
+      debugger
       const questionIndex = Number(params.get('id'));
       if (!isNaN(questionIndex) && questionIndex >= 0 && questionIndex < this.question.length) {
         this.currentQuestionIndex = questionIndex;
@@ -44,46 +47,45 @@ export class StartQuizComponent {
         this.router.navigate(['/start-quiz', this.currentQuestionIndex]);
       }
     })
-
-
-
-
-   
-    
-
-
   }
-  previousQuestion() {
-    if (this.currentQuestionIndex > 0) {
-      this.currentQuestionIndex--;
-      this.router.navigate(['/start-quiz', this.currentQuestionIndex]);
-    }
+
+  getAllQuestions() {
+    debugger
+    const getQuestions = this.formData.map(a => a.question[this.currentQuestionIndex])
+    console.log(getQuestions)
   }
-  nextQuestion() {
-    if (this.currentQuestionIndex < this.questions.length - 1) {
-      this.currentQuestionIndex++;
-      this.router.navigate(['/start-quiz', this.currentQuestionIndex]);
-    }
-  }
+  // previousQuestion() {
+  // debugger
+  //   if (this.currentQuestionIndex > 0) {
+  //     this.currentQuestionIndex--;
+  //     this.router.navigate(['/start-quiz', this.currentQuestionIndex]);
+  //   }
+  // }
+  // nextQuestion() {
+  //   if (this.currentQuestionIndex < this.questions.length - 1) {
+  //     this.currentQuestionIndex++;
+  //     this.router.navigate(['/start-quiz', this.currentQuestionIndex]);
+  //   }
+  // }
   isOptionSelected(questionIndex: number, optionIndex: number): boolean {
     // Check if the option is selected for the given question
     const selectedOptions = this.selectedOptions[questionIndex];
     return selectedOptions ? selectedOptions.includes(optionIndex) : false;
   }
 
-  
+
 
   selectOption(questionIndex: number, optionIndex: number): void {
-    
+
     const questionId = this.formData[questionIndex].id.toString();
-   
+
     // if (!this.selectedOptions[questionIndex]) {
     //   this.selectedOptions[questionIndex] = [];
     // }
     if (!this.selectedOptions[questionId]) {
       this.selectedOptions[questionId] = [optionIndex];
     }
-  
+
     const optionPosition = this.selectedOptions[questionId].indexOf(optionIndex);
 
     // if (optionPosition === -1) {
@@ -93,39 +95,38 @@ export class StartQuizComponent {
     // }
 
     this.saveSelectedOptions();
-  
 
-    
+
+
     // // Save the updated selected options back to local storage
     // localStorage.setItem('selectedOptions', JSON.stringify(selectedOption));
   }
-  
+
   submitAnswer() {
-   debugger
+    debugger
     const storedSelectedOptions = localStorage.getItem('selectedOptions');
     if (storedSelectedOptions) {
       this.selectedOptions = JSON.parse(storedSelectedOptions);
     }
-    
-   
+
+
     const selectedAnswer = Object.values(this.selectedOptions);
-    const correctAnswers = this.formData.map(r=>r.correctAnswer);
-    
+    const correctAnswers = this.formData.map(r => r.correctAnswer);
+
     const totalQuestions: any = this.formData.length
     const correctCount = selectedAnswer.filter((answer, index) => answer.includes(correctAnswers[index])).length;
-    
+
     const resultPercentage = (correctCount / totalQuestions) * 100;
     const resultMessage = `You answered ${correctCount} out of ${totalQuestions} questions correctly (${resultPercentage}%).`;
     console.log(resultMessage)
-    this.router.navigate(['/home/result', resultMessage ]);
+    this.router.navigate(['/home/result', resultMessage]);
   }
   private saveSelectedOptions(): void {
 
     localStorage.setItem('selectedOptions', JSON.stringify(this.selectedOptions));
   }
-  getAllQuestions() {
-    this.question
-  }
+
+ 
 
   getCurrentQuestion() {
     return this.questions.find(question => question.id === this.currentQuestionIndex);
