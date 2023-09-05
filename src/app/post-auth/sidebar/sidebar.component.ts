@@ -16,6 +16,12 @@ export class SidebarComponent {
 
   constructor(private router: Router){}
   @Input() currentQuestionIndex = 0
+  isSidebarCollapsed: boolean = true;
+
+    toggleSidebar() {
+        this.isSidebarCollapsed = !this.isSidebarCollapsed;
+    }
+
 
   navigateToStartQuiz() {
     // Replace with the actual question ID or index

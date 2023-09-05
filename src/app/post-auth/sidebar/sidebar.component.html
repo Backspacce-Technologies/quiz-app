@@ -1,5 +1,5 @@
 
-<div  class="side-menu" id="side_nav" [ngClass]="{'collapsed': isCollapsed}">
+<div  class="side-menu" id="side_nav" [style.left.px]="isSidebarCollapsed ? -250 : 0">
 
     <!-- <div (sideNavStatus)="menuStatus" (ngClass)="{'nav-list-open': menuStatus}"> -->
         <div>

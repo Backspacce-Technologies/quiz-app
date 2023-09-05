@@ -1,30 +1,26 @@
 <div *ngIf="formData">
 
-    <ng-container *ngFor="let entry of formData; let questionIndex = index;">
-        <h3>Question {{ currentQuestionIndex + questionIndex}}:</h3>
-        <p>{{entry.question}}</p>
+    <ng-container >
+        <h3>Question </h3>
+        <p>{{formData[r].question}}</p>
         <div class="options">
             <ol>
-                <div appChangeBg class="card">
-                    <li *ngFor="let option of entry.options; let optionIndex = index">
-                        <input type="{{ entry.multipleAnswers ? 'checkbox' : 'radio' }}" type="checkbox"
-                            name="options-{{ questionIndex }}" [value]="optionIndex"
-                           (change)="selectOption(questionIndex, option.text)">
+                <div class="card">
+                    <li *ngFor="let option of formData[r].options; let optionIndex = index">
+                        <input type="{{ formData[r].multipleAnswers ? 'checkbox' : 'radio' }}" type="checkbox"
+                        name="options" value={{option.text}}  [checked]="isChecked(option,optionIndex)"> 
+                        
                         {{ option.text }}
                     </li>
                 </div>
             </ol>
         </div>
 
-        <button>Previous</button>
-        <button>Next</button>
-        <!-- <button (click)="previousQuestion()" *ngIf="currentQuestionIndex">Previous</button>
-        <button>Next</button> -->
-        <!-- <button *ngIf="currentQuestionIndex > 0" (click)="previousQuestion()">Previous</button>
-        <button *ngIf="currentQuestionIndex < question.length - 1" (click)="nextQuestion()">Next</button>
-        -->
+        <button [disabled]="r===0" (click)="previousQuestion(r)">Previous</button>
+        <button [disabled]="r===(formData.length-1)" (click)="nextq(r)">Next</button>
+       
 
     </ng-container>
-    <button (click)="submitAnswer()">Submit</button>
+    <button *ngIf="r===(formData.length-1)" (click)="submitAnswer()">Submit</button>
     <p>{{ resultMessage }}</p>
 </div>

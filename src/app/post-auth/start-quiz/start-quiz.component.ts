@@ -19,7 +19,9 @@ export class StartQuizComponent {
   @Input() questionForm!: FormGroup;
   resultMessage: string = '';
   selectedOptions: { [key: string]: number[] } = {};
- 
+  r: number = 0;
+  selectedAnswer: any;
+
 
   constructor(private ls: LocalStorageService, private router: Router, private route: ActivatedRoute) {
 
@@ -33,24 +35,23 @@ export class StartQuizComponent {
     console.log(this.formData.map(a => a.question))
     console.log(this.formData);
     
+    // const a = this.formData.map(r => r.options[0].text)
 
-
-
-    const a = this.formData.map(r => r.options[0].text)
-
-    this.route.paramMap.subscribe(params => {
-      debugger
-      const questionIndex = Number(params.get('id'));
-      if (!isNaN(questionIndex) && questionIndex >= 0 && questionIndex < this.question.length) {
-        this.currentQuestionIndex = questionIndex;
-      } else {
-        this.router.navigate(['/start-quiz', this.currentQuestionIndex]);
-      }
-    })
+    // this.route.paramMap.subscribe(params => {
+    //   const questionIndex = Number(params.get('id'));
+    //   if (!isNaN(questionIndex) && questionIndex >= 0 && questionIndex < this.question.length) {
+    //     this.currentQuestionIndex = questionIndex;
+    //   } else {
+    //     this.router.navigate(['/start-quiz', this.currentQuestionIndex]);
+    //   }
+    //   console.log("abc",this.currentQuestionIndex);
+    // })
   }
 
   getAllQuestions() {
     debugger
+    // const getQuestions = this.formData.map(a => a.question[this.currentQuestionIndex])
+    // console.log(getQuestions)
     const getQuestions = this.formData.map(a => a.question[this.currentQuestionIndex])
     console.log(getQuestions)
   }
@@ -101,7 +102,21 @@ export class StartQuizComponent {
     // // Save the updated selected options back to local storage
     // localStorage.setItem('selectedOptions', JSON.stringify(selectedOption));
   }
+  nextq(r: number) {
+    const storedSelectedOptions = localStorage.getItem('selectedOptions');
+    this.r++;
+    return this.r;
+  }
 
+  previousQuestion(r: number) {
+    this.r--;
+    return this.r;
+  }
+
+  isChecked(option: any, optionIndex: number) {
+    
+    return this.selectedAnswer.get(this.r) === option;
+  }
   submitAnswer() {
     debugger
     const storedSelectedOptions = localStorage.getItem('selectedOptions');
@@ -121,12 +136,12 @@ export class StartQuizComponent {
     console.log(resultMessage)
     this.router.navigate(['/home/result', resultMessage]);
   }
-  private saveSelectedOptions(): void {
 
+  private saveSelectedOptions(): void {
     localStorage.setItem('selectedOptions', JSON.stringify(this.selectedOptions));
   }
 
- 
+
 
   getCurrentQuestion() {
     return this.questions.find(question => question.id === this.currentQuestionIndex);
