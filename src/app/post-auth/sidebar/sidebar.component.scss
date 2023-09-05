@@ -2,12 +2,16 @@
     // position: absolute;
     // left: 0rem;
     width: 250px;
-        transition: width 0.3s;
+    transition: width 0.3s;
     height: calc(100vh - 4rem);
-    background-color: rgb(34, 34, 1);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     border-top: 1px solid white;
     color: white;
+    top: 0;
+    left: 0; /* Start with the sidebar expanded */
+    z-index: 1;
+    background-color: #333;
+    transition: left 0.3s;
     // overflow-x: hidden;
     // white-space: nowrap;
     // transition: width 250ms ease-in;
@@ -31,3 +35,6 @@
         width: 60px;
       }
 }
+    .side-menu.collapsed{
+        left: -250px;
+    }

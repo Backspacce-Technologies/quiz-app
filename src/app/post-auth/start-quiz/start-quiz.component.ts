@@ -35,17 +35,7 @@ export class StartQuizComponent {
     console.log(this.formData.map(a => a.question))
     console.log(this.formData);
     
-    // const a = this.formData.map(r => r.options[0].text)
-
-    // this.route.paramMap.subscribe(params => {
-    //   const questionIndex = Number(params.get('id'));
-    //   if (!isNaN(questionIndex) && questionIndex >= 0 && questionIndex < this.question.length) {
-    //     this.currentQuestionIndex = questionIndex;
-    //   } else {
-    //     this.router.navigate(['/start-quiz', this.currentQuestionIndex]);
-    //   }
-    //   console.log("abc",this.currentQuestionIndex);
-    // })
+    
   }
 
   getAllQuestions() {
@@ -55,19 +45,7 @@ export class StartQuizComponent {
     const getQuestions = this.formData.map(a => a.question[this.currentQuestionIndex])
     console.log(getQuestions)
   }
-  // previousQuestion() {
-  // debugger
-  //   if (this.currentQuestionIndex > 0) {
-  //     this.currentQuestionIndex--;
-  //     this.router.navigate(['/start-quiz', this.currentQuestionIndex]);
-  //   }
-  // }
-  // nextQuestion() {
-  //   if (this.currentQuestionIndex < this.questions.length - 1) {
-  //     this.currentQuestionIndex++;
-  //     this.router.navigate(['/start-quiz', this.currentQuestionIndex]);
-  //   }
-  // }
+ 
   isOptionSelected(questionIndex: number, optionIndex: number): boolean {
     // Check if the option is selected for the given question
     const selectedOptions = this.selectedOptions[questionIndex];
@@ -113,10 +91,7 @@ export class StartQuizComponent {
     return this.r;
   }
 
-  isChecked(option: any, optionIndex: number) {
-    
-    return this.selectedAnswer.get(this.r) === option;
-  }
+ 
   submitAnswer() {
     debugger
     const storedSelectedOptions = localStorage.getItem('selectedOptions');
@@ -140,7 +115,11 @@ export class StartQuizComponent {
   private saveSelectedOptions(): void {
     localStorage.setItem('selectedOptions', JSON.stringify(this.selectedOptions));
   }
-
+  saveAnswer(option: string) {
+ 
+    return  this.question[this.r].selectedOptions = option
+   
+}
 
 
   getCurrentQuestion() {

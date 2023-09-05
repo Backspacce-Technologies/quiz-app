@@ -6,9 +6,10 @@
         <div class="options">
             <ol>
                 <div class="card">
-                    <li *ngFor="let option of formData[r].options; let optionIndex = index">
-                        <input type="{{ formData[r].multipleAnswers ? 'checkbox' : 'radio' }}" type="checkbox"
-                        name="options" value={{option.text}}  [checked]="isChecked(option,optionIndex)"> 
+                    <li *ngFor="let option of formData[r].options; let optionIndex = index"     >
+                        <input type="{{ formData[r].multipleAnswers ? 'checkbox' : 'radio' }}" type="checkbox "
+                        name="options" value={{option.text}} (checked)="saveAnswer(option)"
+                        > 
                         
                         {{ option.text }}
                     </li>
@@ -16,11 +17,12 @@
             </ol>
         </div>
 
-        <button [disabled]="r===0" (click)="previousQuestion(r)">Previous</button>
-        <button [disabled]="r===(formData.length-1)" (click)="nextq(r)">Next</button>
+        <button class="btn btn-primary" [disabled]="r===0" (click)="previousQuestion(r)">Previous</button>
+        <button *ngIf="r===(formData.length-1)" (click)="submitAnswer()" class="btn">Submit</button>
+        <button class="btn btn-primary" [disabled]="r===(formData.length-1)" (click)="nextq(r)">Next</button>
        
 
     </ng-container>
-    <button *ngIf="r===(formData.length-1)" (click)="submitAnswer()">Submit</button>
+   
     <p>{{ resultMessage }}</p>
 </div>
