@@ -21,6 +21,7 @@ export class StartQuizComponent {
   selectedOptions: { [key: string]: number[] } = {};
   r: number = 0;
   selectedAnswer: any;
+ 
 
 
   constructor(private ls: LocalStorageService, private router: Router, private route: ActivatedRoute) {
@@ -32,14 +33,14 @@ export class StartQuizComponent {
 
     console.log(this.selectedOptions)
     console.log(this.formData.map(r => r.options));
-    console.log(this.formData.map(a => a.question))
+    console.log(this.formData.map(a => a.correctAnswer))
     console.log(this.formData);
-    
+    console.log(this.selectedAnswer)
     
   }
 
   getAllQuestions() {
-    debugger
+
     // const getQuestions = this.formData.map(a => a.question[this.currentQuestionIndex])
     // console.log(getQuestions)
     const getQuestions = this.formData.map(a => a.question[this.currentQuestionIndex])
@@ -47,6 +48,7 @@ export class StartQuizComponent {
   }
  
   isOptionSelected(questionIndex: number, optionIndex: number): boolean {
+
     // Check if the option is selected for the given question
     const selectedOptions = this.selectedOptions[questionIndex];
     return selectedOptions ? selectedOptions.includes(optionIndex) : false;
@@ -54,26 +56,27 @@ export class StartQuizComponent {
 
 
 
-  selectOption(questionIndex: number, optionIndex: number): void {
-
+  selectOption(questionIndex: number, optionIndex:number): void {
+    debugger
     const questionId = this.formData[questionIndex].id.toString();
 
     // if (!this.selectedOptions[questionIndex]) {
     //   this.selectedOptions[questionIndex] = [];
     // }
+   
     if (!this.selectedOptions[questionId]) {
       this.selectedOptions[questionId] = [optionIndex];
     }
-
+    
     const optionPosition = this.selectedOptions[questionId].indexOf(optionIndex);
 
     // if (optionPosition === -1) {
-    //   this.sdebuggerelectedOptions[questionId].push(optionIndex);
+    //   this.selectedOptions[questionId].push(optionIndex);
     // } else {
     //   this.selectedOptions[questionId].splice(optionPosition, 1);
     // }
 
-    this.saveSelectedOptions();
+    // this.saveSelectedOptions();
 
 
 
@@ -81,7 +84,7 @@ export class StartQuizComponent {
     // localStorage.setItem('selectedOptions', JSON.stringify(selectedOption));
   }
   nextq(r: number) {
-    const storedSelectedOptions = localStorage.getItem('selectedOptions');
+  
     this.r++;
     return this.r;
   }
@@ -94,13 +97,17 @@ export class StartQuizComponent {
  
   submitAnswer() {
     debugger
-    const storedSelectedOptions = localStorage.getItem('selectedOptions');
-    if (storedSelectedOptions) {
-      this.selectedOptions = JSON.parse(storedSelectedOptions);
-    }
+   
+    // const storedSelectedOptions = localStorage.getItem('selectedOptions');
+ 
+    // if (storedSelectedOptions) {
+    //   this.selectedOptions = JSON.parse(storedSelectedOptions);
+    // }
+    
 
-
+    console.log(this.selectedOptions)
     const selectedAnswer = Object.values(this.selectedOptions);
+    
     const correctAnswers = this.formData.map(r => r.correctAnswer);
 
     const totalQuestions: any = this.formData.length
@@ -112,9 +119,10 @@ export class StartQuizComponent {
     this.router.navigate(['/home/result', resultMessage]);
   }
 
-  private saveSelectedOptions(): void {
-    localStorage.setItem('selectedOptions', JSON.stringify(this.selectedOptions));
-  }
+  // private saveSelectedOptions(): void {
+
+  //  return localStorage.setItem('selectedOptions', JSON.stringify(this.selectedOptions));
+  // }
   saveAnswer(option: string) {
  
     return  this.question[this.r].selectedOptions = option

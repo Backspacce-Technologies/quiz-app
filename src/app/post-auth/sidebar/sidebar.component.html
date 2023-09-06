@@ -8,10 +8,10 @@
                 <a href="#"  >Quiz List</a>
                 
             </li>
-            <li class="nav-list-item"   routerLinkActive="active" [routerLinkActiveOptions]={exact:true} (click)="navigateToStartQuiz()">
+            <li class="nav-list-item" routerLink='/home/start-quiz'  routerLinkActive="active" [routerLinkActiveOptions]={exact:true} (click)="navigateToStartQuiz()">
                 <a href="#">Start Quiz</a>
             </li>
-            <li class="nav-list-item"   routerLinkActive="active" [routerLinkActiveOptions]={exact:true} routerLink='/home/result'>
+            <li class="nav-list-item" routerLink='/home/result:result'  routerLinkActive="active" [routerLinkActiveOptions]={exact:true} routerLink='/home/result'>
                 <a href="#">Result</a>
             </li>
         </ul>
