@@ -21,6 +21,7 @@ export class StartQuizComponent {
   selectedOptions: { [key: string]: number[] } = {};
   r: number = 0;
   selectedAnswer: any;
+  optionTouched: boolean = false;
  
 
 
@@ -35,7 +36,7 @@ export class StartQuizComponent {
     console.log(this.formData.map(r => r.options));
     console.log(this.formData.map(a => a.correctAnswer))
     console.log(this.formData);
-    console.log(this.selectedAnswer)
+    console.log(this.saveAnswer)
     
   }
 
@@ -47,17 +48,21 @@ export class StartQuizComponent {
     console.log(getQuestions)
   }
  
-  isOptionSelected(questionIndex: number, optionIndex: number): boolean {
+  // isOptionSelected(option: number, optionIndex: number){
+  //   debugger
+  //   // Check if the option is selected for the given question
+  //   // const question = this.formData[questionIndex];
+  //   // const selectedOptions = this.selectedOptions[question.id.toString()] || [];
+    
+  //   // return selectedOptions.includes(optionText);
 
-    // Check if the option is selected for the given question
-    const selectedOptions = this.selectedOptions[questionIndex];
-    return selectedOptions ? selectedOptions.includes(optionIndex) : false;
-  }
+  //   this.question[this.r].selectedOptions = option
+  // }
 
 
 
   selectOption(questionIndex: number, optionIndex:number): void {
-    debugger
+  
     const questionId = this.formData[questionIndex].id.toString();
 
     // if (!this.selectedOptions[questionIndex]) {
@@ -69,6 +74,8 @@ export class StartQuizComponent {
     }
     
     const optionPosition = this.selectedOptions[questionId].indexOf(optionIndex);
+
+    this.optionTouched = true;
 
     // if (optionPosition === -1) {
     //   this.selectedOptions[questionId].push(optionIndex);
@@ -123,11 +130,12 @@ export class StartQuizComponent {
 
   //  return localStorage.setItem('selectedOptions', JSON.stringify(this.selectedOptions));
   // }
-  saveAnswer(option: string) {
- 
-    return  this.question[this.r].selectedOptions = option
-   
-}
+
+  saveAnswer(r: number, option: any): boolean {
+    return option === this.selectedAnswer;
+    
+
+  }
 
 
   getCurrentQuestion() {
