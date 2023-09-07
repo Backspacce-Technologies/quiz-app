@@ -1,5 +1,5 @@
 
-<div  class="side-menu" id="side_nav" [style.width]="isSidebarCollapsed ? '250px' : '0'" *ngIf="isSidebarCollapsed" (click)="closeSidebar()">
+<div  class="side-menu" id="side_nav" [style.width.px]="isSidebarCollapsed ? 0 : 250">
 
     <!-- <div (sideNavStatus)="menuStatus" (ngClass)="{'nav-list-open': menuStatus}"> -->
         <div>

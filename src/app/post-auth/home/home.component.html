@@ -2,7 +2,7 @@
 
 <div class="content">
 	<app-sidebar></app-sidebar>
-		<div class="app-container" [style.marginLeft]="isSidebarCollapsed ? '250px' : '0'" >
+		<div class="app-container" [style.marginLeft]="isSidebarCollapsed ? '250' : '0'" (onchange)="togglebarSidebar">
 			<div class="display-area p-3"> 
 				<router-outlet></router-outlet>
 			</div>

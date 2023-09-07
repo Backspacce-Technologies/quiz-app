@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SidebarService } from 'src/app/service/sidebar.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,19 +9,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
-  @Input() isSidebarCollapsed: boolean = true;
+ isSidebarCollapsed: boolean = true;
 
+  constructor(private router: Router, private sidebarService: SidebarService){}
   ngOnInit(){
-
+    this.sidebarService.isSidebarCollapsed$.subscribe((isOpen) => {
+      this.isSidebarCollapsed = isOpen;
+    });
   }
 
-  constructor(private router: Router){}
+  
   @Input() currentQuestionIndex = 0
   
-  closeSidebar(){
-    this.isSidebarCollapsed = false;
-  }
-  
+ 
 
 
   navigateToStartQuiz() {

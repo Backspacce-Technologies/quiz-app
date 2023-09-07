@@ -2,10 +2,10 @@
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid" >
 
-			<button class="side-nav-button p-2 me-3 text-success" (click)="toggleSidebar()"> {{ isSidebarCollapsed ? 'Close Sidebar' : 'Open Sidebar' }}
+			<button class="side-nav-button p-2 me-3 text-success" (click)="closeSidebar()">Open Sidebar
 			
 			</button>
-			<button *ngIf="isSidebarCollapsed" (click)="closeSidebar()">Close Sidebar</button>
+			
 			<a class="navbar-brand" href="#">Logo</a>
 		
 		

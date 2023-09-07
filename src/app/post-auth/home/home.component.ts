@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/service/authentication.service';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
+import { SidebarService } from 'src/app/service/sidebar.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class HomeComponent {
  
  
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private authservice: AuthenticationService, private ls : LocalStorageService) {}
+  constructor(private formBuilder: FormBuilder, private router: Router, private sidebarService: SidebarService) {}
 
   ngOnInit() {
     
@@ -31,8 +32,8 @@ export class HomeComponent {
     
   }
 
-  toggleSidebar() {
-    this.isSidebarCollapsed = true;
+  togglebarSidebar(){
+    this.sidebarService.toggleSidebar();
   }
  
   
