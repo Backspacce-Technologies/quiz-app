@@ -1,13 +1,15 @@
 .side-menu{
     // position: absolute;
     // left: 0rem;
-    width: 250px;
+    width:0px;
     transition: width 0.3s;
     height: calc(100vh - 4rem);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     border-top: 1px solid white;
+    position: fixed;
+    overflow-x: hidden;
     color: white;
-    top: 0;
+  
     left: 0; /* Start with the sidebar expanded */
     z-index: 1;
     background-color: #333;
@@ -35,6 +37,4 @@
         width: 60px;
       }
 }
-    .side-menu.collapsed{
-        left: -250px;
-    }
+    

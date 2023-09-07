@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
-  @Input() isCollapsed: boolean = false;
+  @Input() isSidebarCollapsed: boolean = true;
 
   ngOnInit(){
 
@@ -16,11 +16,11 @@ export class SidebarComponent {
 
   constructor(private router: Router){}
   @Input() currentQuestionIndex = 0
-  isSidebarCollapsed: boolean = true;
-
-    toggleSidebar() {
-        this.isSidebarCollapsed = !this.isSidebarCollapsed;
-    }
+  
+  closeSidebar(){
+    this.isSidebarCollapsed = false;
+  }
+  
 
 
   navigateToStartQuiz() {

@@ -15,7 +15,7 @@ export class HeaderComponent {
   
 	  imgFileName:string = "/profile-avatar.png";
     @Output() sidebarToggle = new EventEmitter<void>();
-    isSidebarCollapsed: boolean = false;
+    isSidebarCollapsed: boolean = true;
   
 
     constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private authservice: AuthenticationService, private ls : LocalStorageService) {}
@@ -27,8 +27,12 @@ export class HeaderComponent {
     
 
     toggleSidebar() {
+      debugger
       // this.sidebarToggle.emit();
       this.isSidebarCollapsed = !this.isSidebarCollapsed;
+    }
+    closeSidebar(){
+      this.isSidebarCollapsed = false;
     }
 
     logOut(){

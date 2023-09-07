@@ -1,9 +1,9 @@
 <app-header></app-header>
 
 <div class="content">
-	<app-sidebar [isCollapsed]="isCollapsed"></app-sidebar>
-		<div class="app-container" >
-			<div class="display-area p-3" > 
+	<app-sidebar></app-sidebar>
+		<div class="app-container" [style.marginLeft]="isSidebarCollapsed ? '250px' : '0'" >
+			<div class="display-area p-3"> 
 				<router-outlet></router-outlet>
 			</div>
 		</div>
