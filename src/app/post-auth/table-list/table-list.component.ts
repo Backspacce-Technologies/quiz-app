@@ -12,6 +12,7 @@ import { LocalStorageService } from 'src/app/service/local-storage.service';
 export class TableListComponent {
 	questionForm!: FormGroup;
 	formData = {questionForm: ''};
+	selectedOptions!: string[];
 	
 	invalidLoginAttempt: boolean = false;
 
@@ -27,7 +28,8 @@ export class TableListComponent {
 			options: this.formBuilder.array([this.createOption(false)]),
 			correctAnswer: ['', Validators.required],
 			multipleAnswers: [false],
-			id: [Math.random()]
+			id: [Math.random()],
+			selectedOptions: ['']
 		})
 
 
