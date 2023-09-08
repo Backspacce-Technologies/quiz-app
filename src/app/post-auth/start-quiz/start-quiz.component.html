@@ -1,7 +1,7 @@
 <div *ngIf="formData">
 
     <ng-container >
-        <h3>Question </h3>
+        <h3>Question {{r+1}}</h3>
         <p>{{formData[r].question}}</p>
         <div class="options">
             <ol>
@@ -9,7 +9,7 @@
                     <li *ngFor="let option of formData[r].options; let optionIndex = index "     >
                         <input type="{{ formData[r].multipleAnswers ? 'checkbox' : 'radio' }}" type="checkbox "
                         name="options" value={{option.text}}  (change)="selectOption(r, option.text)"
-                        (click)="saveAnswer(option, optionIndex)"> 
+                        [checked]="option.text === 0"> 
                         
                         {{ option.text }}
                     </li>

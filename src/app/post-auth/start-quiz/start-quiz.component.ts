@@ -23,6 +23,7 @@ export class StartQuizComponent {
   r: number = 0;
   selectedAnswer: any;
   optionTouched: boolean = false;
+  quizData ={}
 
 
 
@@ -37,8 +38,8 @@ export class StartQuizComponent {
     console.log(this.formData.map(r => r.options));
     console.log(this.formData.map(a => a.correctAnswer))
     console.log(this.formData);
-    console.log(this.saveAnswer)
-
+    
+    // this.saveSelectedOptions();
 
   }
 
@@ -67,9 +68,6 @@ export class StartQuizComponent {
 
     const questionId = this.formData[questionIndex].id.toString();
 
-    // if (!this.selectedOptions[questionIndex]) {
-    //   this.selectedOptions[questionIndex] = [];
-    // }
 
     if (!this.selectedOptions[questionId]) {
       this.selectedOptions[questionId] = [optionIndex];
@@ -77,23 +75,19 @@ export class StartQuizComponent {
 
     const optionPosition = this.selectedOptions[questionId].indexOf(optionIndex);
 
+    if (optionPosition === -1) {
+      // Option is not selected, so add it to the selected options
+      this.selectedOptions[questionId].push(optionIndex);
+    } else {
+      // Option is already selected, so remove it
+      this.selectedOptions[questionId].splice(optionPosition, 1);
+    }
+  
     this.optionTouched = true;
+  
+    console.log(this.selectedOptions);
 
-
-    console.log(questionId)
-
-    // if (optionPosition === -1) {
-    //   this.selectedOptions[questionId].push(optionIndex);
-    // } else {
-    //   this.selectedOptions[questionId].splice(optionPosition, 1);
-    // }
-
-    // this.saveSelectedOptions();
-
-
-
-    // // Save the updated selected options back to local storage
-    // localStorage.setItem('selectedOptions', JSON.stringify(selectedOption));
+    
   }
   nextq(r: number) {
 
@@ -102,21 +96,38 @@ export class StartQuizComponent {
   }
 
   previousQuestion(r: number) {
-    this.r--;
-    return this.r;
+    debugger
+    if(this.r > 0){
+      this.r--;
+      
+    }
+  
+    const quizData:any={};
+    const question = this.formData[this.r].id.toString();
+    const options = this.formData[this.r].options.map((r: { text: any; })=>r.text);
+    const selectedOptions = this.selectedOptions[question] || [options];
+  
+       
+    this.selectedOptions[question] = selectedOptions;
+    var a = { [question]: options}
+    quizData[question] = {
+      options,
+    };
+   
+    const quizDataJSON = JSON.stringify(quizData);
+    
+
+    for (let optionIndex = 0; optionIndex < options.length; optionIndex++) {
+      const optionText = options[optionIndex].text;
+      const isSelected = selectedOptions.includes(optionText);
+  
+    
+    }
+      return this.r
   }
 
 
   submitAnswer() {
-
-
-    // const storedSelectedOptions = localStorage.getItem('selectedOptions');
-
-    // if (storedSelectedOptions) {
-    //   this.selectedOptions = JSON.parse(storedSelectedOptions);
-    // }
-
-
     console.log(this.selectedOptions)
     const selectedAnswer = Object.values(this.selectedOptions);
 
@@ -131,19 +142,18 @@ export class StartQuizComponent {
     this.router.navigate(['/home/result', resultMessage]);
   }
 
-  private saveSelectedOptions(): void {
-
-    return localStorage.setItem('selectedOptions', JSON.stringify(this.selectedOptions));
-  }
-
-  saveAnswer(r: string, optionIndex:any) {
-    debugger
-    const savedAnswers = this.selectedOptions[r] || [];
-    return savedAnswers.includes(optionIndex)
   
-   
-   
-      }
+
+  saveAnswer(r: number, optionIndex:any) {
+    this.ls.saveItem('selectedOptions', JSON.stringify(this.selectedOptions));
+       
+  }
+  loadSelectedOptions(): void {
+    const storedOptions = this.ls.getItem('selectedOptions');
+    if (storedOptions) {
+      this.selectedOptions = JSON.parse(storedOptions);
+    }
+  }
 
 
   getCurrentQuestion() {

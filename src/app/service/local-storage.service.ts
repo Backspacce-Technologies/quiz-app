@@ -7,6 +7,9 @@ const USER_KEY = 'auth-user';
 })
 
 export class LocalStorageService {
+  setItem(arg0: string, arg1: string) {
+    throw new Error('Method not implemented.');
+  }
 
 	constructor() { }
 
