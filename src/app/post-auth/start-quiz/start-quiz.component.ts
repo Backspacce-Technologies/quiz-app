@@ -23,7 +23,8 @@ export class StartQuizComponent {
   r: number = 0;
   selectedAnswer: any;
   optionTouched: boolean = false;
-  quizData ={}
+  quizData ={};
+  isSelected!: boolean;
 
 
 
@@ -106,7 +107,7 @@ export class StartQuizComponent {
     const question = this.formData[this.r].id.toString();
     const options = this.formData[this.r].options.map((r: { text: any; })=>r.text);
     const selectedOptions = this.selectedOptions[question] || [options];
-  
+ console.log(selectedOptions)  
        
     this.selectedOptions[question] = selectedOptions;
     var a = { [question]: options}
@@ -117,10 +118,10 @@ export class StartQuizComponent {
     const quizDataJSON = JSON.stringify(quizData);
     
 
-    for (let optionIndex = 0; optionIndex < options.length; optionIndex++) {
-      const optionText = options[optionIndex].text;
+    for (let optionIndex = 0; optionIndex < quizData[question].options.length; optionIndex++) {
+      const optionText = quizData[question].options[optionIndex];
       const isSelected = selectedOptions.includes(optionText);
-  
+      console.log(`Option: ${optionText}, Is Selected: ${isSelected}`);
     
     }
       return this.r

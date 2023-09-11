@@ -9,7 +9,7 @@
                     <li *ngFor="let option of formData[r].options; let optionIndex = index "     >
                         <input type="{{ formData[r].multipleAnswers ? 'checkbox' : 'radio' }}" type="checkbox "
                         name="options" value={{option.text}}  (change)="selectOption(r, option.text)"
-                        [checked]="option.text === 0"> 
+                        [checked]="option.text === isSelected"> 
                         
                         {{ option.text }}
                     </li>

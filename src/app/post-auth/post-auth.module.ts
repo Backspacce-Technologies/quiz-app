@@ -7,6 +7,9 @@ import { HomeComponent } from './home/home.component';
 import { TableListComponent } from './table-list/table-list.component';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -23,8 +26,19 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 		PostAuthRoutingModule,
 		FormsModule,
 		ReactiveFormsModule,
-
+		HttpClientModule,
+		TranslateModule.forRoot({
+			loader: {
+				provide: TranslateLoader,
+				useFactory: HttpLoaderFactory,
+				deps: [HttpClient]
+			}
+		})
 
 	]
 })
 export class PostAuthModule { }
+
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+    return new TranslateHttpLoader(http);
+}
