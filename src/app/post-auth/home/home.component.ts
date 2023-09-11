@@ -4,48 +4,52 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/service/authentication.service';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
 import { SidebarService } from 'src/app/service/sidebar.service';
-
+import { LanguageService } from 'src/app/service/language.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  
+
 })
 export class HomeComponent {
-	@Output() sideNavToggled = new EventEmitter<boolean>();
-	menuStatus: boolean = false;
-  	@Input() sideNavStatus: boolean = false;
-    isSidebarCollapsed: boolean = true;
-
- 
-  	
-    
- 
+  @Output() sideNavToggled = new EventEmitter<boolean>();
+  menuStatus: boolean = false;
+  @Input() sideNavStatus: boolean = false;
+  isSidebarCollapsed: boolean = true;
  
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private sidebarService: SidebarService) {}
+
+
+
+
+
+  constructor(private formBuilder: FormBuilder, private router: Router, private sidebarService: SidebarService, private languageService: LanguageService) {
+
+  }
+
+
 
   ngOnInit() {
-    
-   
-    
+
+
+
   }
 
-  togglebarSidebar(){
+  togglebarSidebar() {
     this.sidebarService.toggleSidebar();
   }
- 
-  
-  Onclick(){
+
+
+  Onclick() {
     this.router.navigateByUrl('/home/table-list')
   }
 
 
-  SideNavToggle(){
-	this.menuStatus = !this.menuStatus;
-	this.sideNavToggled.emit(this.menuStatus);
-	this.sideNavStatus = !this.sideNavStatus;
+  SideNavToggle() {
+    this.menuStatus = !this.menuStatus;
+    this.sideNavToggled.emit(this.menuStatus);
+    this.sideNavStatus = !this.sideNavStatus;
   }
- 
+
 }

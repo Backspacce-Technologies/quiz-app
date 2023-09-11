@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/service/authentication.service';
+import { LanguageService } from 'src/app/service/language.service';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
 import { SidebarService } from 'src/app/service/sidebar.service';
 
@@ -17,10 +18,30 @@ export class HeaderComponent {
 	  imgFileName:string = "/profile-avatar.png";
  
     isSidebarCollapsed: boolean = true;
+    textToTranslate: string = '';
+    translatedText: string = '';
   
 
-    constructor(private formBuilder: FormBuilder, private router: Router, private sidebarService: SidebarService, private route: ActivatedRoute, private authservice: AuthenticationService, private ls : LocalStorageService) {}
+    constructor(private formBuilder: FormBuilder, private router: Router, private sidebarService: SidebarService, private route: ActivatedRoute, private authservice: AuthenticationService, private ls : LocalStorageService,private languageService: LanguageService) {
+    
+    }
   	
+    translateText() {
+      if (this.textToTranslate) {
+        this.languageService
+          .translate(this.textToTranslate, 'hi') // Translate to Hindi
+          .subscribe((response) => {
+            if (response.data && response.data.translations) {
+              this.translatedText = response.data.translations[0].translatedText;
+            } else {
+              this.translatedText = 'Translation not available.';
+            }
+          });
+      }
+    }
+
+
+
     Onclick(){
       this.router.navigateByUrl('/home/table-list')
     }

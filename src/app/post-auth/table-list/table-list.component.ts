@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LanguageService } from 'src/app/service/language.service';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
 
 
@@ -16,9 +17,8 @@ export class TableListComponent {
 	
 	invalidLoginAttempt: boolean = false;
 
-	constructor(private router: Router, private formBuilder: FormBuilder, private ls: LocalStorageService) {
-
-
+	constructor(private router: Router, private formBuilder: FormBuilder, private ls: LocalStorageService, private translate:LanguageService) {
+	
 	}
 
 	ngOnInit() {

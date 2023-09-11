@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { authGuardGuard } from './auth/auth-guard/auth-guard.guard';
 import { unauthGuardGuard } from './unauth/unauth-guard.guard';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -27,7 +28,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes),
+    TranslateModule.forRoot()],
   exports: [RouterModule],
   providers: [authGuardGuard,unauthGuardGuard]
 })
