@@ -11,15 +11,18 @@
 		
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0 dropdown">
-					<!-- <button class="btn btn-outline-success dropdown-toggle" data-bs-toggle="dropdown">Language
+					<!-- <button class="btn btn-outline-success dropdown-toggle" data-bs-toggle="dropdown" onLanguageChange="($event)" >Language
 						<ul class="dropdown-menu dropdown-menu-dark">
 							
-							<li><a href="#" class="dropdown-item" (click)="changeLanguage('en')" value="en">EN</a></li>
-							<li><a href="#" class="dropdown-item" (click)="changeLanguage('hi')" value="hi">HINDI</a></li>
+							<li><a href="#" class="dropdown-item" onLanguageChange="($event)" value="en">EN</a></li>
+							<li><a href="#" class="dropdown-item" onLanguageChange="($event)" value="hi">HINDI</a></li>
 						</ul>
 					</button> -->
-
 					<div>
+						<h1>{{ translatedText }}</h1>
+						<button (click)="translateText()">Translate</button>
+					  </div>
+					<!-- <div>
 						<h1>Translate Text</h1>
 						<input [(ngModel)]="textToTranslate" placeholder="Enter text to translate" />
 						<button (click)="translateText()">Translate</button>
@@ -27,7 +30,7 @@
 						  <h2>Translation:</h2>
 						  <p>{{ translatedText }}</p>
 						</div>
-					  </div>
+					  </div> -->
 				</ul>
 				<div class="profile-logo dropstart">
 					<button class="btn btn-outline-success dropdown-toggle" data-bs-toggle="dropdown"><img [src] ="(imgPath + imgFileName)" class="rounded-circle float-start"  alt="" width="40" height="30"></button>
