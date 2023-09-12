@@ -18,12 +18,21 @@
 							<li><a href="#" class="dropdown-item" onLanguageChange="($event)" value="hi">HINDI</a></li>
 						</ul>
 					</button> -->
-					<div>
-						<h1>{{ translatedText }}</h1>
-						<button (click)="translateText()">Translate</button>
-					  </div>
+					<nav class="navbar navbar-dark navbar-expand-lg">
+						<span class="spacer"></span>
+						<div class="form-group">
+						  <label for="languageSelect">
+							<i class="fa fa-globe" aria-hidden="true"></i>
+							Language:
+						  </label>
+						  <select id="languageSelect" class="form-control" [(ngModel)]="selectedLanguage">
+							<option *ngFor="let language of languageList" [value]="language.code">{{ language.label }}</option>
+						  </select>
+						</div>
+					  </nav>
+					  
 					<!-- <div>
-						<h1>Translate Text</h1>
+						<h1>{{ translatedText }}</h1>
 						<input [(ngModel)]="textToTranslate" placeholder="Enter text to translate" />
 						<button (click)="translateText()">Translate</button>
 						<div *ngIf="translatedText">

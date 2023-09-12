@@ -8,15 +8,19 @@ import { Observable } from 'rxjs/internal/Observable';
   providedIn: 'root'
 })
 export class LanguageService {
-  private readonly apiKey = 'YOUR_GOOGLE_TRANSLATE_API_KEY';
+  private readonly apiKey = 'AIzaSyD-ylBRfYB78hl-s4oBC_3-Jf1za2-9YZA';
   private readonly apiUrl = 'https://translation.googleapis.com/language/translate/v2';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private translate: TranslateService) {}
 
-  translate(text: string, targetLanguage: string): Observable<any> {
+  translateAndSend(text: string, targetLanguage: string): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    // Use ngx-translate to translate the text
+    const translatedText = this.translate.instant(text);
+
     const params = {
-      q: text,
+      q: translatedText,
       target: targetLanguage,
       format: 'text',
       key: this.apiKey,

@@ -5,6 +5,7 @@ import { AuthenticationService } from 'src/app/service/authentication.service';
 import { LanguageService } from 'src/app/service/language.service';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
 import { SidebarService } from 'src/app/service/sidebar.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
@@ -21,28 +22,43 @@ export class HeaderComponent {
    
     textToTranslate: string = 'Hello, world!';
     translatedText: string = '';
+    siteLanguage = 'English';
+    languageList = [
+      { code: 'en', label: 'English' },
+      { code: 'de', label: 'Deutsch' },
+    ];
+    selectedLanguage!: string;
+  
   
   
 
-    constructor(private formBuilder: FormBuilder, private router: Router, private sidebarService: SidebarService, private route: ActivatedRoute, private authservice: AuthenticationService, private ls : LocalStorageService,private languageService: LanguageService) {
-    
-    }
+    constructor(private formBuilder: FormBuilder, private router: Router, private sidebarService: SidebarService, private route: ActivatedRoute, private authservice: AuthenticationService, private ls : LocalStorageService,private languageService: LanguageService, private translate: TranslateService) {  }
   	
 
+    changeSiteLanguage(localeCode: string): void{
+      const selectedLanguage = this.languageList
+      .find((language)=>language.code === localeCode)
+      ?.label.toString();
+      this.selectedLanguage = localeCode;
 
-
-  translateText(): void {
-    this.languageService
-      .translate(this.textToTranslate, 'es') // Translate to Spanish
-      .subscribe((response) => {
-        if (response.data && response.data.translations) {
-          this.translatedText = response.data.translations[0].translatedText;
-        } else {
-          this.translatedText = 'Translation not available.';
-        }
-      });
-    
+      if(selectedLanguage){
+        this.siteLanguage = selectedLanguage;
+        this.translate.use(localeCode)
+      }
+      const currentLanguage = this.translate.currentLang;
+      console.log('currentLanguage', currentLanguage)
     }
+
+
+    // translateAndSend() {
+    //   const textToTranslate = 'Hello, world!'; // Replace with your text
+    //   const targetLanguage = 'es'; // Replace with your target language code
+  
+    //   this.languageService.translateAndSend(textToTranslate, targetLanguage).subscribe((response) => {
+    //     // Handle the API response here
+    //     console.log(response);
+    //   });
+    // }
 
 
     Onclick(){
