@@ -9,7 +9,7 @@
                     <li *ngFor="let option of formData[r].options; let optionIndex = index "     >
                         <input type="{{ formData[r].multipleAnswers ? 'checkbox' : 'radio' }}" type="checkbox "
                         name="options" value={{option.text}}  (change)="selectOption(r, option.text)"
-                        [checked]="option.text === isSelected"> 
+                        > 
                         
                         {{ option.text }}
                     </li>
@@ -18,7 +18,7 @@
         </div>
 
         <button class="btn btn-primary" [disabled]="r===0" (click)="previousQuestion(r)">Previous</button>
-        <button *ngIf="r===(formData.length-1)" (click)="submitAnswer()" class="btn">Submit</button>
+        <button *ngIf="r===(formData.length-1)" (click)="submitAnswer(selectedOptions)" class="btn">Submit</button>
         <button class="btn btn-primary" [disabled]="r===(formData.length-1)" (click)="nextq(r)">Next</button>
        
 

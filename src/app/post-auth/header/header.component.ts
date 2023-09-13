@@ -25,7 +25,7 @@ export class HeaderComponent {
     siteLanguage = 'English';
     languageList = [
       { code: 'en', label: 'English' },
-      { code: 'de', label: 'Deutsch' },
+      { code: 'hi', label: 'Hindi' },
     ];
     selectedLanguage!: string;
   
@@ -36,6 +36,7 @@ export class HeaderComponent {
   	
 
     changeSiteLanguage(localeCode: string): void{
+      debugger
       const selectedLanguage = this.languageList
       .find((language)=>language.code === localeCode)
       ?.label.toString();

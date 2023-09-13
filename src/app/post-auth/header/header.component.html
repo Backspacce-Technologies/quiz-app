@@ -11,35 +11,17 @@
 		
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0 dropdown">
-					<!-- <button class="btn btn-outline-success dropdown-toggle" data-bs-toggle="dropdown" onLanguageChange="($event)" >Language
-						<ul class="dropdown-menu dropdown-menu-dark">
-							
-							<li><a href="#" class="dropdown-item" onLanguageChange="($event)" value="en">EN</a></li>
-							<li><a href="#" class="dropdown-item" onLanguageChange="($event)" value="hi">HINDI</a></li>
-						</ul>
-					</button> -->
-					<nav class="navbar navbar-dark navbar-expand-lg">
-						<span class="spacer"></span>
-						<div class="form-group">
-						  <label for="languageSelect">
-							<i class="fa fa-globe" aria-hidden="true"></i>
-							Language:
-						  </label>
-						  <select id="languageSelect" class="form-control" [(ngModel)]="selectedLanguage">
-							<option *ngFor="let language of languageList" [value]="language.code">{{ language.label }}</option>
-						  </select>
-						</div>
-					  </nav>
+					
+					
+
+					  <div class="mb-3">
+						<label for="selectedLanguage" class="form-label">Language:</label>
+						<select id="languageSelect" class="form-control" [(ngModel)]="selectedLanguage" (change)="changeSiteLanguage(selectedLanguage)">
+							<option *ngFor="let language of languageList" [value]="language.code" >{{ language.label }}</option>
+						</select>
+					</div>
 					  
-					<!-- <div>
-						<h1>{{ translatedText }}</h1>
-						<input [(ngModel)]="textToTranslate" placeholder="Enter text to translate" />
-						<button (click)="translateText()">Translate</button>
-						<div *ngIf="translatedText">
-						  <h2>Translation:</h2>
-						  <p>{{ translatedText }}</p>
-						</div>
-					  </div> -->
+					
 				</ul>
 				<div class="profile-logo dropstart">
 					<button class="btn btn-outline-success dropdown-toggle" data-bs-toggle="dropdown"><img [src] ="(imgPath + imgFileName)" class="rounded-circle float-start"  alt="" width="40" height="30"></button>

@@ -66,7 +66,7 @@ export class StartQuizComponent {
 
 
   selectOption(questionIndex: number, optionIndex: number): void {
-
+   debugger
     const questionId = this.formData[questionIndex].id.toString();
 
 
@@ -128,7 +128,8 @@ export class StartQuizComponent {
   }
 
 
-  submitAnswer() {
+  submitAnswer(selectedOptions:any ) {
+    debugger
     console.log(this.selectedOptions)
     const selectedAnswer = Object.values(this.selectedOptions);
 
